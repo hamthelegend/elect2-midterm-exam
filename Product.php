@@ -1,19 +1,15 @@
 <?php
-    
-    abstract class Calculator {
-        
-        abstract function add($x, $y);
-        abstract function subtract($x, $y);
-        abstract function multiply($x, $y);
-        abstract function divide($x, $y);
-        
+
+    abstract class Calculations {
+
+//        abstract function getRemainingBalance($purchasePrice);
+
     }
 
-    class Product extends Calculator {
+    class Product extends Calculations {
 
         protected string $name;
         protected float $price;
-
         protected float $weight;
 
         public function __construct(string $name, float $price, float $weight) {
@@ -54,5 +50,5 @@
         public function __toString(): string {
             return "$this->name ($this->weight lb): $" . round($this->price, 2);
         }
-
+        
     }
