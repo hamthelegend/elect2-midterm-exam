@@ -1,7 +1,7 @@
 <?php
 
-    require_once "Product.php";
-    require_once "User.php";
+    require_once "n37\Product.php";
+    require_once "n37\User.php";
 
     $products = array(
             new Product("Apples", 1.50, 1.00),
@@ -17,9 +17,6 @@
     );
 
     $user = null;
-    $totalPrice = null;
-
-    $selectedProducts = array();
 
     if (isset($_POST['submit'])){
 
@@ -30,13 +27,13 @@
         ){
 
             $selectedProductIndices = $_POST['selected-products'];
-            $user = new User($_POST['name'], $_POST['spending-limit']);
-
+            $selectedProducts = array();
             foreach ($selectedProductIndices as $index => $selectedProductIndex) {
                 $product = $products[$selectedProductIndex];
                 $selectedProducts[$index] = $product;
-                $totalPrice += $product->getPrice();
             }
+            
+            $user = new User($_POST['name'], $_POST['spending-limit'], $selectedProducts);
 
         }
 
@@ -109,6 +106,7 @@
             <div style="text-align: center; margin-top: 10px">
                 <?php
                     if (!empty($selectedProducts)){
+                        $totalPrice = $user->getTotalSpending();
                         if ($totalPrice > $user->getSpendingLimit()) {
                             echo "You have exceeded your spending limit!<br>";
                             echo "Total price: $$totalPrice<br>";
